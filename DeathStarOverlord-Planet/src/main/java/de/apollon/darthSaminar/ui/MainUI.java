@@ -62,6 +62,7 @@ public class MainUI extends UI
 
 		layout.addComponent(planetImage);
 		layout.setComponentAlignment(planetImage, Alignment.MIDDLE_CENTER);
+		layout.setExpandRatio(planetImage, 1);
 
 		Button btn = new Button("Shoot", e -> shoot());
 

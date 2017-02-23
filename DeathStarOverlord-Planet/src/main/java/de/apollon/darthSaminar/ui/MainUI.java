@@ -42,7 +42,7 @@ public class MainUI extends UI
 
 		setContent(layout);
 
-		Label lbl = new Label("Hello Deathstart, you won't hurt us!");
+		Label lbl = new Label("Nananana Deathstar - you won't hurt us!");
 
 		layout.addComponent(lbl);
 		layout.setComponentAlignment(lbl, Alignment.MIDDLE_CENTER);

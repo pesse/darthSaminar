@@ -3,8 +3,8 @@
  */
 package de.apollon.darthSaminar.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -20,14 +20,20 @@ public class DeathStarService
 		public void fire();
 	}
 
-	private List<DeathStarFireListener> listeners;
+	private Set<DeathStarFireListener> listeners;
 
 	public void addFireListener(DeathStarFireListener listener)
 	{
 		if (listeners == null)
-			listeners = new ArrayList<>();
+			listeners = new HashSet<>();
 
 		listeners.add(listener);
+	}
+
+	public void removeFireListener(DeathStarFireListener listener)
+	{
+		if (listeners != null)
+			listeners.remove(listener);
 	}
 
 	public void fireDeathStar()

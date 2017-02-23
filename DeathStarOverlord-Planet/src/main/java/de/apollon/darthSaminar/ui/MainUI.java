@@ -34,9 +34,12 @@ public class MainUI extends UI
 
 	private Image planetImage;
 
+	private DeathStarFireListener deathStarFireListener;
+
 	@Override
 	protected void init(VaadinRequest request)
 	{
+
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSizeFull();
 
@@ -47,17 +50,6 @@ public class MainUI extends UI
 		layout.addComponent(lbl);
 		layout.setComponentAlignment(lbl, Alignment.MIDDLE_CENTER);
 
-		service.addFireListener(new DeathStarFireListener()
-		{
-
-			@Override
-			public void fire()
-			{
-				if (isAttached())
-					access(() -> destroyPlanet());
-			}
-		});
-
 		planetImage = new Image(null, new ThemeResource("img/planet.gif"));
 
 		layout.addComponent(planetImage);
@@ -67,6 +59,35 @@ public class MainUI extends UI
 		Button btn = new Button("Shoot", e -> shoot());
 
 		// layout.addComponent(btn);
+	}
+
+	@Override
+	public void attach()
+	{
+		super.attach();
+
+		deathStarFireListener = new DeathStarFireListener()
+		{
+
+			@Override
+			public void fire()
+			{
+				if (isAttached())
+					access(() -> destroyPlanet());
+			}
+		};
+
+		service.addFireListener(deathStarFireListener);
+	}
+
+	@Override
+	public void detach()
+	{
+		// Important thing to remove the Listener, otherwise we will have a
+		// memory leak AND stale/unattached UIs in the listener set
+		service.removeFireListener(deathStarFireListener);
+
+		super.detach();
 	}
 
 	protected void shoot()

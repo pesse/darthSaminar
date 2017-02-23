@@ -1,0 +1,7 @@
+@import "_variables.scss";
+@import "../valo/valo.scss";
+
+@mixin deathstar
+{
+	@include valo;
+}

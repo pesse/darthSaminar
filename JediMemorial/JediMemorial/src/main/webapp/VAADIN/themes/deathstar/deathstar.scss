@@ -1,0 +1,18 @@
+@import "_variables.scss";
+@import "../valo/valo.scss";
+
+@mixin deathstar
+{
+	@include valo;
+
+	.memorial
+	{
+	        border: 70px solid transparent;
+    width: 610px;
+    background-image: url(img/note_background_stone.png);
+    height: 560px;
+    background-position: -70px -70px;
+    color: black;
+        white-space: normal;
+	}
+}

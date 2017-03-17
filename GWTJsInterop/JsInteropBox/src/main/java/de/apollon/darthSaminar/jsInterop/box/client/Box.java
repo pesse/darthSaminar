@@ -3,13 +3,10 @@
  */
 package de.apollon.darthSaminar.jsInterop.box.client;
 
-import com.google.gwt.animation.client.AnimationScheduler;
-import com.google.gwt.animation.client.AnimationScheduler.AnimationCallback;
-import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Composite;
 
 import de.apollon.darthSaminar.jsInterop.box.client.core.Document;
+import de.apollon.darthSaminar.jsInterop.box.client.core.Window.AnimationFrameCallback;
 import de.pesse.gwt.jsinterop.threeJs.cameras.PerspectiveCamera;
 import de.pesse.gwt.jsinterop.threeJs.core.Geometry;
 import de.pesse.gwt.jsinterop.threeJs.geometries.BoxBufferGeometry;
@@ -21,28 +18,28 @@ import de.pesse.gwt.jsinterop.threeJs.objects.Mesh;
 import de.pesse.gwt.jsinterop.threeJs.renderers.WebGLRenderer;
 import de.pesse.gwt.jsinterop.threeJs.scenes.Scene;
 import de.pesse.gwt.jsinterop.threeJs.textures.Texture;
+import jsinterop.annotations.JsType;
 
 /**
  * @author snitsche
  *
  */
-public class Box extends Composite implements AnimationCallback
+@JsType(namespace="Example")
+public class Box
 {
 
 	private WebGLRenderer renderer;
-	private Canvas canvas;
 	private PerspectiveCamera camera;
 	private Scene scene;
 	private Mesh mesh;
+	private AnimationFrameCallback callback;
 
 	/**
 	 *
 	 */
 	public Box()
 	{
-		canvas = Canvas.createIfSupported();
-
-		initWidget(canvas);
+		init();
 	}
 
 	private void init()
@@ -69,34 +66,24 @@ public class Box extends Composite implements AnimationCallback
 
 		Document.body.appendChild(renderer.domElement);
 
-	}
-
-	@Override
-	protected void onLoad()
-	{
-		// TODO Auto-generated method stub
-		super.onLoad();
-
-		init();
-
-		canvas.setVisible(false);
-
-
-		AnimationScheduler.get().requestAnimationFrame(this);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.google.gwt.animation.client.AnimationScheduler.AnimationCallback#execute(double)
-	 */
-	@Override
-	public void execute(double timestamp)
-	{
-
-		AnimationScheduler.get().requestAnimationFrame(this);
-
-		mesh.rotation.x += 0.005;
-		mesh.rotation.y += 0.01;
-
 		renderer.render(scene, camera);
+
+		 callback = new AnimationFrameCallback()
+		{
+
+			@Override
+			public void execute()
+			{
+				de.apollon.darthSaminar.jsInterop.box.client.core.Window.requestAnimationFrame(callback);
+
+				mesh.rotation.x += 0.005;
+				mesh.rotation.y += 0.01;
+
+				renderer.render(scene, camera);
+			}
+		};
+
+		de.apollon.darthSaminar.jsInterop.box.client.core.Window.requestAnimationFrame(callback);
+
 	}
 }

@@ -4,7 +4,7 @@
   <artifactId>JsInteropBox</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <properties>
+   <properties>
 
 		<!-- Setting maven.compiler.source to something different to 1.8 needs
 			that you configure the sourceLevel in gwt-maven-plugin since GWT compiler
@@ -33,8 +33,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.pesse.gwt.jsinterop.threejs</groupId>
-  <artifactId>jsinterop-threejs</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  			<artifactId>jsinterop-threejs</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -95,10 +95,14 @@
 						<!-- Ask GWT to create the Story of Your Compile (SOYC) (gwt:compile) -->
 						<arg>-compileReport</arg>
 						<arg>-XcompilerMetrics</arg>
+						<arg>-generateJsInteropExports</arg>
 					</compilerArgs>
 					<!-- DevMode configuration -->
 					<warDir>${project.build.directory}/${project.build.finalName}</warDir>
 					<classpathScope>compile+runtime</classpathScope>
+					<devmodeArgs>
+						<arg>-generateJsInteropExports</arg>
+					</devmodeArgs>
 					<!-- URL(s) that should be opened by DevMode (gwt:devmode). -->
 					<startupUrls>
 						<startupUrl>Examples.html</startupUrl>
